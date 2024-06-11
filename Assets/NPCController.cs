@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPCController : MonoBehaviour
 {
     public float followSpeed = 2f; // Speed at which NPC follows the robot
-
+    private AudioSource audioSource;
     private Transform robotTransform; // Reference to the robot transform
 
     // Start following the robot
@@ -13,7 +13,12 @@ public class NPCController : MonoBehaviour
     {
         robotTransform = robot;
     }
+    void Start()
+    {
+        // 获取 AudioSource 组件
+        audioSource = GetComponent<AudioSource>();
 
+    }
     void Update()
     {
         if (robotTransform != null)
@@ -21,7 +26,7 @@ public class NPCController : MonoBehaviour
             // Calculate direction from NPC to Robot
             Vector3 direction = robotTransform.position - transform.position;
             direction.y = 0f; // Ensure NPC moves only along the horizontal plane
-
+            audioSource.mute = true;
             // If the NPC is not close enough to the Robot
             if (direction.magnitude > 1f)
             {
